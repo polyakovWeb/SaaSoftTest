@@ -10,9 +10,10 @@
 
 ## Демо работы
 
-<img width="1919" height="716" alt="image-1" src="https://github.com/user-attachments/assets/e2e285c8-fa0f-400d-ab91-70bec7581e33" />
+<img width="959" height="551" alt="image" src="https://github.com/user-attachments/assets/6b6ce5ed-4caf-4504-a94e-d265f30da2a3" />
 
-<img width="1912" height="467" alt="image-2" src="https://github.com/user-attachments/assets/2464991a-fc8f-4ca3-9a3b-24c4de03394b" />
+<img width="957" height="583" alt="image" src="https://github.com/user-attachments/assets/380a40f2-2495-473c-afd4-f35fd8c9ec89" />
+
 
 ## Стэк
 
