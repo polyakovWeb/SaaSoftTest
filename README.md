@@ -1,33 +1,38 @@
 # SaaSoftTest
 
-This template should help get you started developing with Vue 3 in Vite.
+Форма управления учётными записями
 
-## Recommended IDE Setup
+## Ключевые моменты
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+-  Приложение поддерживает добавление/удаление/редактирование учётных записей с сохранением данных при перезагрузке
+-  Валидация формы учётной записи после заполнения/изменения при помощи vee-validate с поддержкой схем валидации yup
+-  Использование state manager + UI библиотеки для быстрой разработки и дальнейшей масштабируемости 
 
-## Type Support for `.vue` Imports in TS
+## Демо работы
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+<img width="1919" height="716" alt="image-1" src="https://github.com/user-attachments/assets/e2e285c8-fa0f-400d-ab91-70bec7581e33" />
 
-## Customize configuration
+<img width="1912" height="467" alt="image-2" src="https://github.com/user-attachments/assets/2464991a-fc8f-4ca3-9a3b-24c4de03394b" />
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Стэк
 
-## Project Setup
+-  VueJS
+-  TypeScript
+-  Pinia
+-  Vee-validate + yup
+-  ElementPlus
+-  Vite
 
-```sh
-npm install
-```
+## Установка и запуск
 
-### Compile and Hot-Reload for Development
+1. Клонирование репозитория
 
-```sh
-npm run dev
-```
+`git clone https://github.com/polyakovWeb/SaaSoftTest`
 
-### Type-Check, Compile and Minify for Production
+2. Установка зависимостей
 
-```sh
-npm run build
-```
+`npm install`
+
+3. Запуск приложения
+
+`npm run dev`
