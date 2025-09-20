@@ -1,72 +1,17 @@
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { defineStore } from "pinia";
 import { AccountTypeEnum, type AccountI } from "@/types/Account.types";
+import { ElMessage } from "element-plus";
 
 export const useAccountsStore = defineStore("accounts", () => {
-  // массив для аккаунтов, прошедших валидацию?
-  const accounts = ref<AccountI[]>([
-    {
-      tags: [{ text: "администратор" }, { text: "полный доступ" }],
-      accountType: AccountTypeEnum.local,
-      login: "admin",
-      password: "admin123",
-    },
-    {
-      tags: [{ text: "сотрудник" }, { text: "ограниченный доступ" }],
-      accountType: AccountTypeEnum.ldap,
-      login: "ivanov.i",
-      password: null,
-    },
-    {
-      tags: [{ text: "пример1" }, { text: "Метка 2" }],
-      accountType: AccountTypeEnum.local,
-      login: "guest",
-      password: "guest123",
-    },
-    {
-      tags: [{ text: "бухгалтерия" }, { text: "финансы" }],
-      accountType: AccountTypeEnum.ldap,
-      login: "petrova.a",
-      password: null,
-    },
+  const accounts = ref<AccountI[]>([]);
 
-    // {
-    //   tags: [{ text: "администратор" }, { text: "полный доступ" }],
-    //   accountType: "Локальная",
-    //   login: "admin",
-    //   password: "admin123",
-    // },
-    // {
-    //   tags: [{ text: "сотрудник" }, { text: "ограниченный доступ" }],
-    //   accountType: "LDAP",
-    //   login: "ivanov.i",
-    //   password: null,
-    // },
-    // {
-    //   tags: null,
-    //   accountType: "Локальная",
-    //   login: "guest",
-    //   password: "guest123",
-    // },
-    // {
-    //   tags: [{ text: "бухгалтерия" }, { text: "финансы" }],
-    //   accountType: "LDAP",
-    //   login: "petrova.a",
-    //   password: null,
-    // },
-    // {
-    //   tags: [{ text: "IT отдел" }, { text: "разработка" }, { text: "админ" }],
-    //   accountType: "Локальная",
-    //   login: "dev_user",
-    //   password: "DevPass2024!",
-    // },
-  ]);
-  // временный массив для аккаунтов?
-  // сюда добавляются ещё не валидированные аккаунты для их заполнения в форме, после валидации - аккаунт удаляется из временного хранилища, добавляется в accounts и записывается в localStorage
-  const tempAccounts = ref<AccountI[]>([]);
+  // загружаем данные при инициализации стора
+  getFromLocalStorage();
 
   function addNewEmptyAccount() {
     accounts.value.push({
+      id: new Date().getTime(),
       tags: null,
       accountType: null,
       login: null,
@@ -74,9 +19,56 @@ export const useAccountsStore = defineStore("accounts", () => {
     });
   }
 
-  function deleteAccount(index: number) {
+  function deleteAccount(account: AccountI) {
+    const index = accounts.value.indexOf(account);
+    if (index === -1) {
+      ElMessage.error({
+        message: "Ошибка удаления: аккаунт не найден",
+        duration: 2000,
+      });
+      return;
+    }
     accounts.value.splice(index, 1);
+    saveToLocalStorage();
+    ElMessage.success({
+      message: "Аккаунт успешно удалён!",
+      duration: 2000,
+    });
   }
 
-  return { accounts, tempAccounts, addNewEmptyAccount, deleteAccount };
+  function saveAccount(oldAccount: AccountI, updatedAccount: AccountI) {
+    const index = accounts.value.indexOf(oldAccount);
+    if (index === -1) {
+      ElMessage.error({
+        message: "Ошибка сохранения: аккаунт не найден",
+        duration: 2000,
+      });
+      return;
+    }
+    accounts.value[index] = { ...updatedAccount };
+    ElMessage.success({
+      message: "Данные успешно сохранены!",
+      duration: 2000,
+    });
+    saveToLocalStorage();
+  }
+
+  function saveToLocalStorage() {
+    localStorage.setItem("accounts", JSON.stringify(accounts.value));
+  }
+
+  function getFromLocalStorage() {
+    const savedAccountsString = localStorage.getItem("accounts");
+    if (savedAccountsString) {
+      const accountsData = JSON.parse(savedAccountsString);
+      accounts.value = accountsData;
+    }
+  }
+
+  return {
+    accounts,
+    addNewEmptyAccount,
+    deleteAccount,
+    saveAccount,
+  };
 });

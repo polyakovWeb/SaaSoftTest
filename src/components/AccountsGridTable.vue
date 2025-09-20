@@ -15,11 +15,13 @@ const { accounts } = useAccountsStore();
       <p class="form__title">Пароль</p>
     </header>
     <div class="form__data">
-      <AccountRow
-        v-if="accounts.length"
-        v-for="accountData in accounts"
-        :accountData
-      />
+      <template v-if="accounts.length > 0">
+        <AccountRow
+          v-for="accountData in accounts"
+          :key="accountData.id"
+          :accountData
+        />
+      </template>
       <EmptyDataMessage v-else />
     </div>
   </div>

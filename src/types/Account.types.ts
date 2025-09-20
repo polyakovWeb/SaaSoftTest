@@ -1,6 +1,5 @@
-// каждое поле может быть null, если не заполнено
-// (например, при добавлении новой учётной записи)
 export interface AccountI {
+  id: number;
   tags: Tag[] | null; // example: [{text: tag 1}, {text: "tag 2"}];
   accountType: AccountTypeEnum | null;
   login: string | null;
